@@ -8,6 +8,7 @@ import androidx.test.filters.SmallTest
 import com.enigmacamp.myapplication.getOrAwaitValue
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
@@ -41,11 +42,11 @@ class ShoppingDaoTest {
     }
 
     @Test
-    fun insertShoppingItem() = runBlockingTest {
+    fun insertShoppingItem() = runBlocking {
         val shoppingItem = Shopping("name", 1, 1f, "url", id = 1)
         dao.insertShoppingItem(shoppingItem)
 
-        val allShoppingItems = dao.observeAllShoppingItems().getOrAwaitValue()
+        val allShoppingItems = dao.observeAllShoppingItems()
 
         assertThat(allShoppingItems).contains(shoppingItem)
     }
@@ -56,7 +57,7 @@ class ShoppingDaoTest {
         dao.insertShoppingItem(shoppingItem)
         dao.deleteShoppingItem(shoppingItem)
 
-        val allShoppingItems = dao.observeAllShoppingItems().getOrAwaitValue()
+        val allShoppingItems = dao.observeAllShoppingItems()
 
         assertThat(allShoppingItems).doesNotContain(shoppingItem)
     }
