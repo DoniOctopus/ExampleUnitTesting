@@ -1,4 +1,4 @@
-package com.enigmacamp.myapplication.data
+package com.enigmacamp.myapplication.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
