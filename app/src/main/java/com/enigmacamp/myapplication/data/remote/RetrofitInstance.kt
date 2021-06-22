@@ -4,16 +4,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-         val BASE_URL = "https://pixabay.com"
+    val BASE_URL = "https://pixabay.com"
 
-    private val retrofit: Retrofit by lazy {
+    private val retrofit =
         Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-    }
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-    val api: PixabayAPI by lazy {
-        retrofit.create(PixabayAPI::class.java)
+
+    fun getPixabayApi(): PixabayAPI {
+        return retrofit.create(PixabayAPI::class.java)
     }
 }
