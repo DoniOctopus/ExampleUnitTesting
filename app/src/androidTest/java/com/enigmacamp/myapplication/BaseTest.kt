@@ -48,6 +48,10 @@ abstract class BaseTest {
             .setBody(getJson(path))
     }
 
+    fun getFailedResponse(): MockResponse {
+        return MockResponse().setResponseCode(HttpURLConnection.HTTP_INTERNAL_ERROR)
+    }
+
     fun getRetrofit(mockWebServer: MockWebServer): Retrofit {
         return Retrofit.Builder()
             .baseUrl(mockWebServer.url("/"))
