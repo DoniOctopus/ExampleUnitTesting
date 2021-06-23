@@ -1,7 +1,7 @@
 package com.enigmacamp.myapplication.data.remote.responses
 
+import com.squareup.moshi.Json
 
-import com.google.gson.annotations.SerializedName
 
 data class ImageResult(
     val comments: Int,
@@ -20,7 +20,7 @@ data class ImageResult(
     val tags: String,
     val type: String,
     val user: String,
-    @SerializedName("user_id")
+    @Json(name = "user_id")
     val userId: Int,
     val userImageURL: String,
     val views: Int,

@@ -10,15 +10,13 @@ import com.enigmacamp.myapplication.data.local.ShoppingDao
 import com.enigmacamp.myapplication.data.local.ShoppingDatabase
 import com.enigmacamp.myapplication.getOrAwaitValue
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 class ShoppingDaoTest {
@@ -44,7 +42,7 @@ class ShoppingDaoTest {
     }
 
     @Test
-    fun insertShoppingItem() = runBlockingTest {
+    fun insertShoppingItem() = runBlocking{
         val shoppingItem = Shopping("name", 1, 1f, "url", id = 1)
         dao.insertShoppingItem(shoppingItem)
 
@@ -54,7 +52,7 @@ class ShoppingDaoTest {
     }
 
     @Test
-    fun deleteShoppingItem() = runBlockingTest {
+    fun deleteShoppingItem() = runBlocking {
         val shoppingItem = Shopping("name", 1, 1f, "url", id = 1)
         dao.insertShoppingItem(shoppingItem)
         dao.deleteShoppingItem(shoppingItem)
@@ -65,7 +63,7 @@ class ShoppingDaoTest {
     }
 
     @Test
-    fun observeTotalPriceSum() = runBlockingTest {
+    fun observeTotalPriceSum() = runBlocking {
         val shoppingItem1 = Shopping("name", 2, 10f, "url", id = 1)
         val shoppingItem2 = Shopping("name", 4, 5.5f, "url", id = 2)
         val shoppingItem3 = Shopping("name", 0, 100f, "url", id = 3)

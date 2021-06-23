@@ -1,7 +1,7 @@
 package com.enigmacamp.myapplication.data.remote
 
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
     private const val BASE_URL = "https://pixabay.com"
@@ -9,7 +9,7 @@ object RetrofitInstance {
     private val retrofit =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
             .build()
 
 
