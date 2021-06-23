@@ -1,6 +1,5 @@
 package com.enigmacamp.myapplication
 
-import androidx.room.Room
 import androidx.room.Room.inMemoryDatabaseBuilder
 import androidx.test.platform.app.InstrumentationRegistry
 import com.enigmacamp.myapplication.data.local.ShoppingDatabase

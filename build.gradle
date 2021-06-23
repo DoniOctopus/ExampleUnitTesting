@@ -1,26 +1,60 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.21"
+    ext.kotlin_version = "1.5.10"
     repositories {
         google()
+        mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.1.1"
+        classpath 'com.android.tools.build:gradle:4.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath "org.jacoco:org.jacoco.core:0.8.6"
     }
 }
 
 allprojects {
     repositories {
         google()
+        mavenCentral()
         jcenter()
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['app:testDebugUnitTest']) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for the Debug build."
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def variantName = 'debug'
+
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*',
+                      'com/enigmacamp/myapplication/data/local/*.class',
+                      'com/enigmacamp/myapplication/data/remote/*.class']
+    def debugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/${variantName}", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+
+    sourceDirectories.setFrom(files(mainSrc))
+    classDirectories.setFrom(files(debugTree))
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
+
 }

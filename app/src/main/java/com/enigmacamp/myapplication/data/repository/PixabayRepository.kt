@@ -12,4 +12,13 @@ class PixabayRepository(private val pixabayAPI: PixabayAPI) {
             null
         }
     }
+
+    suspend fun searchImageByCategory(category: String): ImageResponse? {
+        val response = pixabayAPI.searchForImageByCategory(category)
+        return if (response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
+    }
 }
