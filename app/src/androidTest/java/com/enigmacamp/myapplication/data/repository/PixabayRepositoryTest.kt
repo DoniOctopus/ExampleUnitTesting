@@ -11,6 +11,7 @@ import org.junit.Test
 
 class PixabayRepositoryTest : BaseTest() {
     override fun isMockServerEnabled() = true
+    override fun isMockDatabaseEnabled() = false
 
     @Test
     fun getJsonData_whenSuccessHitPixabayAPI() {

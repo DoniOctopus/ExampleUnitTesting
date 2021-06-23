@@ -1,5 +1,9 @@
 package com.enigmacamp.myapplication
 
+import androidx.room.Room
+import androidx.room.Room.inMemoryDatabaseBuilder
+import androidx.test.platform.app.InstrumentationRegistry
+import com.enigmacamp.myapplication.data.local.ShoppingDatabase
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -10,8 +14,11 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 
 abstract class BaseTest {
+    var database: ShoppingDatabase? = null
     var mockServer: MockWebServer? = null
+
     abstract fun isMockServerEnabled(): Boolean
+    abstract fun isMockDatabaseEnabled(): Boolean
 
     @Before
     open fun setUp() {
@@ -27,11 +34,20 @@ abstract class BaseTest {
         if (isMockServerEnabled()) {
             mockServer = MockWebServer()
         }
+        if (isMockDatabaseEnabled()) {
+            database = inMemoryDatabaseBuilder(
+                InstrumentationRegistry.getInstrumentation().targetContext,
+                ShoppingDatabase::class.java
+            ).build()
+        }
     }
 
     open fun stopMock() {
         if (isMockServerEnabled()) {
             mockServer?.shutdown()
+        }
+        if (isMockDatabaseEnabled()) {
+            database?.close()
         }
     }
 
