@@ -27,4 +27,17 @@ class PixabayRepositoryTest : BaseTest() {
         }
     }
 
+    @Test
+    fun returnNull_whenFailedPixabayAPI() {
+        runBlocking {
+            mockServer?.let {
+                val pixabayAPI = getRetrofit(it).create(PixabayAPI::class.java)
+                it.enqueue(getFailedResponse())
+                val pixabayRepository = PixabayRepository(pixabayAPI)
+                val response = pixabayRepository.searchImage("flower")
+                Truth.assertThat(response).isNull()
+            }
+        }
+    }
+
 }
